@@ -1,0 +1,67 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`nautilus vite plugin > should match the expected config snapshot 1`] = `
+{
+  "esbuild": {
+    "target": "ES2022",
+  },
+  "plugins": [
+    {
+      "apply": "build",
+      "buildStart": [Function],
+      "config": [Function],
+      "configResolved": [Function],
+      "enforce": "pre",
+      "generateBundle": [Function],
+      "name": "vite:dts",
+      "options": [Function],
+      "transform": [Function],
+      "watchChange": [Function],
+      "writeBundle": [Function],
+    },
+  ],
+  "rollupOptions": {
+    "external": [
+      "reflect-metadata",
+    ],
+    "output": {
+      "globals": {
+        "reflect-metadata": "Reflect",
+      },
+    },
+  },
+}
+`;
+
+exports[`nautilus vite plugin > should return a config method 1`] = `
+{
+  "esbuild": {
+    "target": "ES2022",
+  },
+  "plugins": [
+    {
+      "apply": "build",
+      "buildStart": [Function],
+      "config": [Function],
+      "configResolved": [Function],
+      "enforce": "pre",
+      "generateBundle": [Function],
+      "name": "vite:dts",
+      "options": [Function],
+      "transform": [Function],
+      "watchChange": [Function],
+      "writeBundle": [Function],
+    },
+  ],
+  "rollupOptions": {
+    "external": [
+      "reflect-metadata",
+    ],
+    "output": {
+      "globals": {
+        "reflect-metadata": "Reflect",
+      },
+    },
+  },
+}
+`;
