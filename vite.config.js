@@ -7,15 +7,23 @@ export default defineConfig({
       entry: path.resolve(__dirname, "index.js"),
       name: "NautilusPlugin",
       fileName: (format) => `index.${format}.js`,
-      formats: ["es", "cjs"]
+      formats: ["es", "cjs"],
     },
     rollupOptions: {
-      external: ["vite", "vite-plugin-dts", "path", "child_process", "./scripts/run-command.js"], 
+      external: [
+        "vite",
+        "vite-plugin-dts",
+        "path",
+        "fs",
+        "child_process",
+        "./scripts/run-command.js",
+        "./scripts/merge-files.js"
+      ],
       output: {
         globals: {
-          vite: "Vite"
-        }
-      }
-    }
-  }
+          vite: "Vite",
+        },
+      },
+    },
+  },
 });
