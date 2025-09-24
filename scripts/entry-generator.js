@@ -29,26 +29,28 @@ function generateEntryContent(files){
     .map(file => `import "${file.replace(/\\/g, "/")}";`)
     .join("\n");
 
-    return `
-        import "reflect-metadata"
+    return  `import "reflect-metadata"
+import { AUTOWIRED_METADATA } from "./generated/autowired-metadata";
 
-        declare global {
-            interface Window {
-                nautilusAppInitialized: boolean;
-            }
-        }
+Reflect.defineMetadata("AUTOWIRED_METADATA", AUTOWIRED_METADATA, globalThis);
 
-        ${imports}
+declare global {
+    interface Window {
+        nautilusAppInitialized: boolean;
+    }
+}
 
-        import {DIContainer, Router} from "nautilus"
+${imports}
 
-        if(!window.nautilusAppInitialized){
-            window.nautilusAppInitialized = true;
-            DIContainer.getInstance().bootstrap()
-            await Router.init()
-        }
+import { DIContainer, Router } from "nautilus"
 
-    `
+if(!window.nautilusAppInitialized){
+    window.nautilusAppInitialized = true;
+    DIContainer.getInstance().bootstrap()
+    await Router.init()
+}
+
+`
 }
 
 export async function createTempEntry(){
@@ -77,7 +79,7 @@ export async function createTempEntry(){
     if(fs.existsSync(INDEX_HTML)){
         let html = fs.readFileSync(INDEX_HTML, "utf-8");
 
-       const newScriptTag = `<script type="module" src=".nautilus/nautilus-entry.ts"></script>`
+        const newScriptTag = `<script type="module" src=".nautilus/nautilus-entry.ts"></script>`
 
         if (/<script\s+type=["']module["']\s+src=["'][^"']*["']><\/script>/.test(html)) {
             html = html.replace(
