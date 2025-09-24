@@ -3,12 +3,10 @@ import runCommand from "./scripts/run-command";
 import { createTempEntry } from "./scripts/entry-generator.js";
 import path from "path";
 
-const generateAutoWiredPath = path.resolve("node_modules", "nautilus", "dist", "tools", "generate-autowired.es.js")
 const injectStaticPath = path.resolve("node_modules", "nautilus", "dist", "tools", "inject-static-files.es.js")
+const generateAutoWiredPath = path.resolve(process.cwd(), "node_modules", "nautilus", "dist", "tools", "generate-autowired.es.js")
 
 export default function nautilus() {
-  const virtualModuleId = "virtual:nautilus";
-  const resolvedVirtualModuleId = "\0" + virtualModuleId;
   console.log("Cargando nautilus...");
 
   const nautilusPlugin = {
@@ -16,12 +14,10 @@ export default function nautilus() {
 
     async writeBundle() {
       await runCommand(injectStaticPath, true)
-      await runCommand(generateAutoWiredPath, true)
     },
-
     config: async () => {
-      const entryFile = await createTempEntry();
       await runCommand(generateAutoWiredPath, true)
+      const entryFile = await createTempEntry();
       return {
          resolve: {
           alias: {
@@ -53,19 +49,6 @@ export default function nautilus() {
         console.log("Cambio detectado en: ", file);
         await createTempEntry();
         server.restart();
-      }
-    },
-
-    resolveId(id) {
-      if (id === virtualModuleId) {
-        return resolvedVirtualModuleId;
-      }
-    },
-
-    async load(id) {
-      if (id === resolvedVirtualModuleId) {
-        const config = await runCommand("scripts/load-config.ts");
-        return `export default ${JSON.stringify(config, null, 2)}`;
       }
     },
   };
