@@ -5,6 +5,7 @@ import path from "path";
 
 const injectStaticPath = path.resolve("node_modules", "nautilus", "dist", "tools", "inject-static-files.es.js")
 const generateAutoWiredPath = path.resolve(process.cwd(), "node_modules", "nautilus", "dist", "tools", "generate-autowired.es.js")
+const compilePath = path.resolve(process.cwd(), "node_modules", "nautilus", "dist", "tools", "run-compiler.es.js ")
 
 export default function nautilus() {
   console.log("Cargando nautilus...");
@@ -17,6 +18,7 @@ export default function nautilus() {
     },
     config: async () => {
       await runCommand(generateAutoWiredPath, true)
+      await runCommand(compilePath, true)
       const entryFile = await createTempEntry();
       return {
          resolve: {
